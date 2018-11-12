@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK){
             String info = "zibalId: " + data.getStringExtra("zibalId") + "\n" +
                     "refNumber:"  + data.getStringExtra("refNumber") + "\n" +
-                    "orderId:"  + data.getStringExtra("orderId") + "\n" +
                     "amount:"  + data.getStringExtra("amount") + "\n" +
                     "success:"  + data.getBooleanExtra("success", false);
             receivedData.setText(info);
