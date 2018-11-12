@@ -5,14 +5,20 @@ import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText id;
+    TextView receivedData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        id = findViewById(R.id.zibalId);
+        receivedData = findViewById(R.id.returned_data);
         
     }
 
@@ -28,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public void onPay(View view){
         if (isPackageInstalled("pos.zibal.com.zibal")){
             Intent payByZibal = new Intent("com.zibal.pos.zibalpay");
-            payByZibal.putExtra("zibalId", "14359");
+            payByZibal.putExtra("zibalId", id.getText().toString());
             startActivityForResult(payByZibal, 951);
         }
         else
@@ -38,6 +44,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(this, "just returned", Toast.LENGTH_SHORT).show();
+        if (resultCode == RESULT_OK){
+            String info = "zibalId: " + data.getStringExtra("zibalId") + "\n" +
+                    "refNumber:"  + data.getStringExtra("refNumber") + "\n" +
+                    "orderId:"  + data.getStringExtra("orderId") + "\n" +
+                    "amount:"  + data.getStringExtra("amount") + "\n" +
+                    "success:"  + data.getBooleanExtra("success", false);
+            receivedData.setText(info);
+        }
+        else if (resultCode == RESULT_CANCELED){
+            receivedData.setText(data.getStringExtra("message"));
+        }
+
     }
 }
