@@ -53,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
         }
         else if (resultCode == RESULT_CANCELED){
             receivedData.setText(data.getStringExtra("message"));
+            //خطای دریافت شناسه...
+            //عدم دسترسی به اینترنت...
+            //عدم دسترسی به سرور زیبال
+            //شناسه زیبال نامعتبر است.
+            //شناسه قبلا پرداخت شده.
         }
 
     }
